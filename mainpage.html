@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Watching Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        #videoPlayer {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        #watchedCount {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Ad Watching Page</h1>
+    <p>You have watched <span id="watchedCount">0</span> videos.</p>
+    <div id="videoPlayer">
+        <!-- Video player goes here -->
+        <!-- Example: <video controls src="video.mp4"></video> -->
+    </div>
+
+    <script>
+        // Check if the user is authenticated
+        const isAuthenticated = true; // You need to implement your own authentication logic
+
+        if (isAuthenticated) {
+            // Get the number of videos watched from localStorage
+            let watchedCount = localStorage.getItem('watchedCount');
+            if (!watchedCount) {
+                watchedCount = 0;
+            }
+
+            // Update the display
+            document.getElementById('watchedCount').textContent = watchedCount;
+
+            // Increment the watched count when the video ends
+            const videoPlayer = document.getElementById('videoPlayer').getElementsByTagName('video')[0];
+            videoPlayer.addEventListener('ended', () => {
+                watchedCount++;
+                localStorage.setItem('watchedCount', watchedCount);
+                document.getElementById('watchedCount').textContent = watchedCount;
+            });
+        } else {
+            // Redirect to the login page or show a message indicating the user needs to log in
+            alert('Please log in to access this page.');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
